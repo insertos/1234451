@@ -1,9 +1,35 @@
-.\qemu-system-x86_64.exe -accel whpx -hda .\kali-linux-2025-W08-qemu-amd64.qcow2 -m 14G -net nic,model=virtio -net user -vga std -boot strict=on
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
-reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections
-netsh advfirewall firewall show rule name=all | findstr /i "remote desktop"
-sc config TermService start= auto
-sc start TermService
-reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber
-sc stop TermService
-sc start TermService
+@echo off
+set "INSTALL_DIR=C:\Program Files (x86)\AnyDesk"
+set "ANYDESK_EXE=%INSTALL_DIR%\AnyDesk.exe"
+set "TMP_EXE=%TEMP%\AnyDeskSetup.exe"
+set "PASSWORD=MyStrongPass123!"
+
+echo [*] Downloading AnyDesk...
+curl -s "https://download.anydesk.com/AnyDesk.exe" --output "%TMP_EXE%"
+
+echo [*] Installing AnyDesk as system service...
+"%TMP_EXE%" --install "%INSTALL_DIR%" --start-with-win --silent
+
+:: Give AnyDesk time to register the service
+timeout /t 5 /nobreak >nul
+
+echo [*] Starting AnyDesk service via Windows Service Manager...
+sc start AnyDesk >nul 2>&1
+
+:: Wait until it's really running
+for /l %%i in (1,1,15) do (
+    sc query AnyDesk | find "RUNNING" >nul 2>&1 && goto running
+    timeout /t 1 >nul
+)
+echo [!] AnyDesk service did not start properly.
+exit /b 1
+
+:running
+echo [✔] AnyDesk service is running!
+
+:: Set unattended access password (new syntax for v7+)
+echo %PASSWORD% | "%ANYDESK_EXE%" --set-password _unattended_access
+
+:: Show the AnyDesk ID
+echo [*] AnyDesk ID:
+for /f "delims=" %%i in ('"%ANYDESK_EXE%" --get-id') do echo %%i
