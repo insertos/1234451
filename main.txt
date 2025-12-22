@@ -1,4 +1,5 @@
-@echo off
-for /f "delims=" %%i in ('"C:\Program Files (x86)\AnyDesk\AnyDesk.exe" --get-id') do set ID=%%i 
-echo AnyDesk ID is: %ID%
-pause
+dir "C:\ProgramData\AnyDesk"
+reg query "HKLM\SOFTWARE\AnyDesk"
+reg query "HKLM\SOFTWARE\WOW6432Node\AnyDesk"
+"C:\Program Files (x86)\AnyDesk\AnyDesk.exe" --install "C:\Program Files (x86)\AnyDesk" --start-service
+type "C:\ProgramData\AnyDesk\ad_svc.trace"
