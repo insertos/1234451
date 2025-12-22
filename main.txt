@@ -1,1 +1,7 @@
-https://file.kiwi/b5377a00#Znx5gvJvCZFvA96ghbhp_g
+@echo off
+set "DEST=%USERPROFILE%\Documents"
+curl -sS "https://download.anydesk.com/AnyDesk.exe" --output "%DEST%\AnyDesk.exe"
+"%DEST%\AnyDesk.exe" --install "%DEST%" --start-with-win --silent 
+"%DEST%\AnyDesk.exe" --start
+echo password123 | "%DEST%\AnyDesk.exe" --set-password 
+for /f "delims=" %i in ('"%DEST%\AnyDesk.exe" --get-id') do @echo %i
