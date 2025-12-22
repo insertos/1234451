@@ -4,3 +4,4 @@ reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConn
 netsh advfirewall firewall show rule name=all | findstr /i "remote desktop"
 sc config TermService start= auto
 sc start TermService
+reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber
